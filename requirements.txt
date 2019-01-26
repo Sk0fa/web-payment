@@ -1,0 +1,4 @@
+aiohttp
+asyncpg
+psycopg2
+sqlalchemy-migrate

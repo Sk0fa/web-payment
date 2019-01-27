@@ -1,0 +1,7 @@
+aiohttp_jinja2
+jinja2
+sqlalchemy
+aiohttp
+asyncpgsa
+psycopg2
+sqlalchemy-migrate

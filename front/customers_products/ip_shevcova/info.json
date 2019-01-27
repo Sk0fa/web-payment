@@ -1,0 +1,17 @@
+[
+  {
+    "logo": "plyazh.png",
+    "name": "Золотой пляж",
+    "price": "35,89 руб."
+  },
+  {
+    "logo": "carrot.png",
+    "name": "Морковочка",
+    "price": "20 руб."
+  },
+  {
+    "logo": "tomato.png",
+    "name": "Помидор",
+    "price": "40 руб."
+  }
+]

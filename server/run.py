@@ -10,8 +10,9 @@ def main():
     app = web.Application()
     app.on_startup.append(api.init_connection)
     app.router.add_routes(get_routes(api))
+    app.router.add_static('/static/', './front/')
 
-    web.run_app(app)
+    web.run_app(app, port=3000)
 
 
 if __name__ == '__main__':

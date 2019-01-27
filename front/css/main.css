@@ -1,0 +1,42 @@
+#header {
+    margin-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid black;
+}
+
+#customer_logo {
+    height: 150px;
+}
+
+#rekviziti_show {
+    margin-top: 15px;
+}
+
+#customer_info {
+    margin-top: 15px;
+}
+
+.product_logo {
+    height: 150px;
+}
+
+.center {
+    text-align: center;
+}
+
+#payment {
+    border-bottom: 1px solid black;
+}
+
+#put_card_payment {
+    margin-top: 20px;
+}
+
+input.form-control {
+    margin-top: 5px;
+}
+
+button {
+    margin-top: 5px;
+
+}

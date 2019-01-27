@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="/static/css/main.css">
+
+    <title>Платеж</title>
+</head>
+<body>
+<div class="content">
+    <div class="container">
+        <div class="row" id="header">
+            <div class="col-md-9">
+                <div class="row">
+                    <h4><b>{{ customer_info["name"] }}</b></h4>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <h5>{{ customer_info["phone"] }}</h5>
+                    </div>
+
+                    <div class="col-md-2">
+                        <a href="#"><h5>{{ customer_info["website"] }}</h5></a>
+                    </div>
+
+                    <div class="col-md-2">
+                        <a href="#"><h5>{{ customer_info["email"] }}</h5></a>
+                    </div>
+                </div>
+
+                <div class="row" id="customer_info">
+                    <div class="col-md-12">
+                        <a href="#">Информация о компании</a>
+                    </div>
+                </div>
+
+                <div class="row" id="rekviziti_show">
+                    <div class="col-md-12">
+                        <a href="#">Показать реквизиты</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <img src="/static/customers_logo/{{ customer }}.png" class="img-responsive" id="customer_logo">
+            </div>
+        </div>
+
+        <div class="row" id="payment">
+            <div class="row">
+                <div class="col-md-2">
+                    <a href="#"><h4>Заплатить</h4></a>
+                </div>
+
+                <div class="col-md-3">
+                    <a href="#"><h4>Запросить платеж</h4></a>
+                </div>
+            </div>
+
+            <div id="put_payment">
+                <div class="row">
+                    <div class="col-md-2">
+                        <a href="#">С карты любого банка</a>
+                    </div>
+
+                    <div class="col-md-2">
+                        <a href="#">Из своего интернет-банка</a>
+                    </div>
+                </div>
+
+                <div id="put_card_payment">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="cp_card_number" placeholder="Номер карты">
+                            <input type="text" class="form-control" id="cp_card_ttl" placeholder="Срок действия карты (ММ/ГГГГ)">
+                            <input type="text" class="form-control" id="cp_cvc" placeholder="CVC номер">
+                            <input type="text" class="form-control" id="cp_amount" placeholder="Сумма">
+                            <input type="text" class="form-control" id="cp_comment" placeholder="Комментарий">
+                            <input type="email" class="form-control" id="cp_email" placeholder="Электронная почта">
+
+                            <button type="button" class="btn btn-primary" id="btn_card_payment">Заплатить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" id="footer">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 class="center"><b>О компании {{ customer_info["name"] }}</b></h4>
+                </div>
+            </div>
+
+            <div class="row">
+                {% for product_info in products_info %}
+                <div class="col-md-4">
+                    <img src="/static/customers_products/{{ customer }}/{{ product_info['logo'] }}" class="img-responsive product_logo center-block">
+                    <div class="center"><b>{{ product_info["name"] }}</b></div>
+                    <div class="center">{{ product_info["price"] }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/static/js/main.js"></script>
+</body>
+</html>

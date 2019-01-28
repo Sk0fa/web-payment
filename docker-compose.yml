@@ -2,18 +2,6 @@
 version: '3.1'
 
 services:
-  app:
-    build: .
-    command: ./run.sh
-    depends_on:
-      - db
-    environment:
-      DB_USER: admin
-      DB_PASSWORD: admin
-      DB_HOST: db
-      DB_NAME: app_db
-    ports:
-      - "3000:3000"
 
   db:
     image: postgres:10-alpine
@@ -33,3 +21,16 @@ services:
       - db
     ports:
       - "8080:8080"
+
+  app:
+    build: .
+    command: ./run.sh
+    depends_on:
+      - db
+    environment:
+      DB_USER: admin
+      DB_PASSWORD: admin
+      DB_HOST: db
+      DB_NAME: app_db
+    ports:
+      - "3000:3000"

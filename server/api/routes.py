@@ -14,4 +14,5 @@ def get_routes(api):
         web.post('/admin', api.admin_post),
         web.get('/admin/card_payments', api.card_payments),
         web.get('/admin/requested_payments', api.requested_payments),
+        web.get('/logout', api.logout),
     ]

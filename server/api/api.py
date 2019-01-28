@@ -164,6 +164,17 @@ class Api:
         )
 
     @staticmethod
+    async def logout(request):
+        if not request.user:
+            return web.HTTPPermanentRedirect('/admin')
+
+        cookies = request.cookies
+        sid = cookies.get('sid')
+        SESSION_IDS_TO_USER.pop(sid)
+
+        return web.HTTPTemporaryRedirect('/admin')
+
+    @staticmethod
     async def admin(request):
         return aiohttp_jinja2.render_template(
             'admin.html', request, {'user': request.user}

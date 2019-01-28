@@ -43,9 +43,7 @@ class Api:
                 'result': 'OK',
             })
         except Exception:
-            return self._json_response({
-                'error': 'Something wrong',
-            })
+            return self._error()
 
     async def card_payment_get(self, request):
         result = await self._get_card_payments(request)
@@ -70,10 +68,13 @@ class Api:
             account_number=account_number, comment=comment, email=email,
         )
 
-        await self.db.create_requested_payment(card_payment)
-        return self._json_response({
-            'result': 'OK',
-        })
+        try:
+            await self.db.create_requested_payment(card_payment)
+            return self._json_response({
+                'result': 'OK',
+            })
+        except Exception:
+            return self._error()
 
     async def requested_payment_get(self, request):
         result = await self._get_requested_payments(request)
@@ -92,6 +93,13 @@ class Api:
         return self._json_response({
             'result': 'OK',
         })
+
+    async def card_payments(self, request):
+        card_payments = await self._get_card_payments(request)
+
+        return aiohttp_jinja2.render_template(
+            'card_payments.html', request, {'card_payments': card_payments}
+        )
 
     @staticmethod
     async def internet_bank_payment(request):
@@ -141,6 +149,12 @@ class Api:
         )
 
     @staticmethod
+    async def admin(request):
+        return aiohttp_jinja2.render_template(
+            'admin.html', request, {}
+        )
+
+    @staticmethod
     def _json_response(message):
         return web.json_response(
             message,
@@ -159,7 +173,7 @@ class Api:
             result.append({
                 'id': row['id'],
                 'card_number': row['card_number'],
-                'amount': int(row['amount']),
+                'amount': int(row['amount']) if row['amount'] else None,
                 'card_ttl': row['card_ttl'].strftime('%m.%Y') if row['card_ttl'] else None,
                 'cvc': row['cvc'],
                 'comment': row['comment'],
@@ -184,7 +198,7 @@ class Api:
                 'account_number': row['account_number'],
                 'comment': row['comment'],
                 'email': row['email'],
-                'amount': int(row['amount']),
+                'amount': int(row['amount']) if row['amount'] else None,
             })
 
         return result
@@ -210,5 +224,12 @@ class Api:
 
         if filter_by == 'card_ttl':
             filter_value = datetime.datetime.strptime(filter_value, '%m.%Y').date()
+        elif filter_by == 'id' or filter_by == 'amount':
+            filter_value = int(filter_value)
 
         return filter_value
+
+    def _error(self):
+        return self._json_response({
+            'error': 'Something wrong',
+        })

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="/static/css/admin.css">
+
+    <title>Платежи по картам</title>
+</head>
+<body>
+<div class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <form method="get">
+                    <input type="text" class="form-control" name="field" placeholder="Фильтровать по полю">
+                    <input type="text" class="form-control" name="filter" placeholder="Значение">
+
+                    <button type="submit" class="btn btn-primary">Фильтр</button>
+                </form>
+            </div>
+
+            <div class="col-md-6">
+                <form method="get">
+                    <input type="text" class="form-control" name="field" placeholder="Сортировать по полю..">
+                    <input type="text" class="form-control" name="sort" placeholder="asc / desc">
+
+                    <button type="submit" class="btn btn-primary">Фильтр</button>
+                </form>
+            </div>
+        </div>
+
+        <br>
+        <div class="row">
+            <div class="col-md-1">
+                id
+            </div>
+
+            <div class="col-md-2">
+                card_number
+            </div>
+
+            <div class="col-md-2">
+                amount
+            </div>
+
+            <div class="col-md-2">
+                card_ttl
+            </div>
+
+            <div class="col-md-1">
+                cvc
+            </div>
+
+            <div class="col-md-2">
+                comment
+            </div>
+
+            <div class="col-md-2">
+                email
+            </div>
+        </div>
+        {% for payment in card_payments %}
+        <div class="row {% if not payment['is_safe'] %}not_safe{% endif %}">
+            <div class="col-md-1">
+                {{ payment["id"] }}
+            </div>
+
+            <div class="col-md-2">
+                {{ payment["card_number"] }}
+            </div>
+
+            <div class="col-md-2">
+                {{ payment["amount"] }}
+            </div>
+
+            <div class="col-md-2">
+                {{ payment["card_ttl"] }}
+            </div>
+
+            <div class="col-md-1">
+                {{ payment["cvc"] }}
+            </div>
+
+            <div class="col-md-2">
+                {{ payment["comment"] }}
+            </div>
+
+            <div class="col-md-2">
+                {{ payment["email"] }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script src="/static/js/main.js"></script>
+</body>
+</html>

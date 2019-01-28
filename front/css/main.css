@@ -38,5 +38,21 @@ input.form-control {
 
 button {
     margin-top: 5px;
+}
 
+#put_internet_payment {
+    display: none;
+}
+
+#requested_payment {
+    display: none;
+}
+
+.selected {
+    font-weight: bold;
+    color: black;
+}
+
+.pointer:hover {
+    cursor: pointer;
 }

@@ -61,22 +61,22 @@
         <div class="row" id="payment">
             <div class="row">
                 <div class="col-md-2">
-                    <a href="#"><h4>Заплатить</h4></a>
+                    <h4 class="selected pointer" id="text_put_payment">Заплатить</h4>
                 </div>
 
                 <div class="col-md-3">
-                    <a href="#"><h4>Запросить платеж</h4></a>
+                    <h4 id="text_requested_payment" class="pointer">Запросить платеж</h4>
                 </div>
             </div>
 
             <div id="put_payment">
                 <div class="row">
                     <div class="col-md-2">
-                        <a href="#">С карты любого банка</a>
+                        <h5 class="selected pointer" id="text_put_card_payment">С карты любого банка</h5>
                     </div>
 
                     <div class="col-md-2">
-                        <a href="#">Из своего интернет-банка</a>
+                        <h5 id="text_put_internet_payment" class="pointer">Из своего интернет-банка</h5>
                     </div>
                 </div>
 
@@ -91,6 +91,38 @@
                             <input type="email" class="form-control" id="cp_email" placeholder="Электронная почта">
 
                             <button type="button" class="btn btn-primary" id="btn_card_payment">Заплатить</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="put_internet_payment">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="in_payment_from" placeholder="От кого">
+                            <input type="text" class="form-control" id="in_bic" placeholder="БИК банка">
+                            <input type="text" class="form-control" id="in_account_number" placeholder="Номер счета">
+                            <input type="text" class="form-control" id="in_comment" placeholder="Без НДС / НДС 10% / НДС 18%">
+                            <input type="text" class="form-control" id="in_amount" placeholder="Сумма">
+
+                            <button type="button" class="btn btn-primary" id="btn_internet_payment">Получить файл для интернет банка</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="requested_payment">
+                <div id="get_requested_payment">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="rp_tax" placeholder="ИНН получателя">
+                            <input type="text" class="form-control" id="rp_bic" placeholder="БИК банка">
+                            <input type="text" class="form-control" id="rp_account_number" placeholder="Номер счета">
+                            <input type="text" class="form-control" id="rp_comment" placeholder="Без НДС / НДС 10% / НДС 18%">
+                            <input type="text" class="form-control" id="rp_amount" placeholder="Сколько">
+                            <input type="text" class="form-control" id="rp_phone" placeholder="Номер телефона">
+                            <input type="email" class="form-control" id="rp_email" placeholder="Электронная почта">
+
+                            <button type="button" class="btn btn-primary" id="btn_requested_payment">Создать платёж</button>
                         </div>
                     </form>
                 </div>

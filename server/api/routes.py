@@ -10,4 +10,6 @@ def get_routes(api):
         web.patch('/api/card_payment', api.card_payment_patch),
         web.post('/api/internet_bank_payment', api.internet_bank_payment),
         web.get('/payment/{customer}', api.payment_customer),
+        web.get('/admin', api.admin),
+        web.get('/admin/card_payments', api.card_payments),
     ]

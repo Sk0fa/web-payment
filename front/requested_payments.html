@@ -16,7 +16,7 @@
 
     <link rel="stylesheet" href="/static/css/admin.css">
 
-    <title>Платежи по картам</title>
+    <title>Запрошенные платежи</title>
 </head>
 <body>
 <div class="content">
@@ -26,12 +26,13 @@
                 <form method="get">
                     <select class="form-control" name="field">
                         <option value="id">ID</option>
-                        <option value="card_number">Номер карты</option>
-                        <option value="amount">Сумма</option>
-                        <option value="card_ttl">Действие карты</option>
-                        <option value="cvc">CVC</option>
+                        <option value="tax">ИНН</option>
+                        <option value="bic">БИК</option>
+                        <option value="phone">Телефон</option>
+                        <option value="account_number">Номер счета</option>
                         <option value="comment">Комментарий</option>
                         <option value="email">Эл. почта</option>
+                        <option value="amount">Сумма</option>
                     </select>
                     <input type="text" class="form-control" name="filter" placeholder="Значение">
 
@@ -43,12 +44,13 @@
                 <form method="get">
                     <select class="form-control" name="field">
                         <option value="id">ID</option>
-                        <option value="card_number">Номер карты</option>
-                        <option value="amount">Сумма</option>
-                        <option value="card_ttl">Действие карты</option>
-                        <option value="cvc">CVC</option>
+                        <option value="tax">ИНН</option>
+                        <option value="bic">БИК</option>
+                        <option value="phone">Телефон</option>
+                        <option value="account_number">Номер счета</option>
                         <option value="comment">Комментарий</option>
                         <option value="email">Эл. почта</option>
+                        <option value="amount">Сумма</option>
                     </select>
 
                     <select class="form-control" name="sort">
@@ -64,53 +66,57 @@
         <br>
         <div class="row">
             <div class="col-md-1">
-                id
+                ID
             </div>
 
             <div class="col-md-2">
-                card_number
-            </div>
-
-            <div class="col-md-2">
-                amount
+                ИНН
             </div>
 
             <div class="col-md-1">
-                card_ttl
+                БИК
             </div>
 
             <div class="col-md-1">
-                cvc
+                Телефон
             </div>
 
             <div class="col-md-2">
-                comment
+                Номер счета
             </div>
 
             <div class="col-md-2">
-                email
+                Комментарий
+            </div>
+
+            <div class="col-md-2">
+                Эл. почта
+            </div>
+
+            <div class="col-md-1">
+                Сумма
             </div>
         </div>
-        {% for payment in card_payments %}
-        <div class="row {% if not payment['is_safe'] %}not_safe{% endif %}">
+        {% for payment in requested_payments %}
+        <div class="row">
             <div class="col-md-1">
                 {{ payment["id"] }}
             </div>
 
             <div class="col-md-2">
-                {{ payment["card_number"] }}
+                {{ payment["tax"] }}
+            </div>
+
+            <div class="col-md-1">
+                {{ payment["bic"] }}
+            </div>
+
+            <div class="col-md-1">
+                {{ payment["phone"] }}
             </div>
 
             <div class="col-md-2">
-                {{ payment["amount"] }}
-            </div>
-
-            <div class="col-md-1">
-                {{ payment["card_ttl"] }}
-            </div>
-
-            <div class="col-md-1">
-                {{ payment["cvc"] }}
+                {{ payment["account_number"] }}
             </div>
 
             <div class="col-md-2">
@@ -122,13 +128,13 @@
             </div>
 
             <div class="col-md-1">
-                <button type="button" class="id_{{ payment['id'] }} not_safe_payment">Небезопасный</button>
+                {{ payment["amount"] }}
             </div>
         </div>
         {% endfor %}
     </div>
 </div>
 
-<script src="/static/js/admin.js"></script>
+<script src="/static/js/main.js"></script>
 </body>
 </html>

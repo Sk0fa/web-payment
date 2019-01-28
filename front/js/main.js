@@ -12,7 +12,119 @@ function post(url, data) {
         });
 }
 
+function validate_card_payment() {
+    let result = true;
+
+    let value = $("#cp_card_number").val();
+    if (!value.match(/\d{16}/gm)) {
+        $("#cp_card_number").addClass("is_invalid");
+        result = false;
+    }
+
+    value = $("#cp_card_ttl").val();
+    if (!value.match(/(0?[1-9]|1[012])\/\d{4}/gm)) {
+        $("#cp_card_ttl").addClass("is_invalid");
+        result = false;
+    }
+
+    value = $("#cp_cvc").val();
+    if (!value.match(/\d{3}/gm)) {
+        $("#cp_cvc").addClass("is_invalid");
+        result = false;
+    }
+
+    value = $("#cp_amount").val();
+    if (!value.match(/\d+/gm)) {
+        $("#cp_amount").addClass("is_invalid");
+        result = false;
+    }
+    else if (parseInt(value) > 75000) {
+        $("#cp_amount").addClass("is_invalid");
+        result = false;
+    }
+
+    value = $("#cp_comment").val();
+    if (!value.match(/([a-zA-Z0-9_-]){1,150}/gm)) {
+        $("#cp_comment").addClass("is_invalid");
+        result = false;
+    }
+
+    return result;
+}
+
+function validate_internet_payment() {
+    let result = true;
+
+    let value = $("#in_bic").val();
+    if (!value.match(/\d+/gm)) {
+        $("#in_bic").addClass("is_invalid");
+        result = false;
+    }
+
+    value = $("#in_account_number").val();
+    if (!value.match(/\d{20}/gm)) {
+        $("#in_account_number").addClass("is_invalid");
+        result = false;
+    }
+
+    value = $("#in_amount").val();
+    if (!value.match(/\d+/gm)) {
+        $("#in_amount").addClass("is_invalid");
+        result = false;
+    }
+    else if (parseInt(value) > 75000) {
+        $("#in_amount").addClass("is_invalid");
+        result = false;
+    }
+
+    return result;
+}
+
+function validate_requested_payment() {
+    let result = true;
+
+    let value = $("#rp_tax").val();
+    if (!value.match(/\d+/gm)) {
+        $("#rp_tax").addClass("is_invalid");
+        result = false;
+    }
+
+    value = $("#rp_bic").val();
+    if (!value.match(/\d+/gm)) {
+        $("#rp_bic").addClass("is_invalid");
+        result = false;
+    }
+
+    value = $("#rp_account_number").val();
+    if (!value.match(/\d{20}/gm)) {
+        $("#rp_account_number").addClass("is_invalid");
+        result = false;
+    }
+
+    value = $("#rp_amount").val();
+    if (!value.match(/\d+/gm)) {
+        $("#rp_amount").addClass("is_invalid");
+        result = false;
+    }
+    else if (parseInt(value) > 75000) {
+        $("#rp_amount").addClass("is_invalid");
+        result = false;
+    }
+
+    value = $("#rp_phone").val();
+    if (!value.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im)) {
+        $("#rp_phone").addClass("is_invalid");
+        result = false;
+    }
+
+    return result;
+}
+
 $("#btn_card_payment").click(function () {
+    if (!validate_card_payment()) {
+        return;
+    }
+
     let data = {
         "card_number": $("#cp_card_number").val(),
         "card_ttl": $("#cp_card_ttl").val().replace('/', '.'),
@@ -26,6 +138,10 @@ $("#btn_card_payment").click(function () {
 });
 
 $("#btn_internet_payment").click(function () {
+    if (!validate_internet_payment()) {
+        return;
+    }
+
     let data = {
         "payment_from": $("#in_payment_from").val(),
         "bic": $("#in_bic").val(),
@@ -58,6 +174,10 @@ $("#btn_internet_payment").click(function () {
 });
 
 $("#btn_requested_payment").click(function () {
+    if (!validate_requested_payment()) {
+        return;
+    }
+
     let data = {
         "tax": $("#rp_tax").val(),
         "bic": $("#rp_bic").val(),
@@ -115,4 +235,8 @@ $("#text_put_card_payment").click(function () {
     $("#text_put_payment").addClass("selected");
     $("#put_card_payment").show();
     $("#put_payment").show();
+});
+
+$("input").click(function () {
+    $(this).removeClass("is_invalid");
 });

@@ -1,7 +1,7 @@
 import asyncpgsa
 import settings
 from sqlalchemy import desc, select, update
-from api.models import CardPayment, RequestedPayment
+from api.models import CardPayment, RequestedPayment, User
 
 
 class DataBase:
@@ -15,7 +15,7 @@ class DataBase:
             user=settings.DB_USER,
             password=settings.DB_PASSWORD,
             min_size=5,
-            max_size=30
+            max_size=30,
         )
 
     async def create_card_payment(self, card_payment: CardPayment):
@@ -70,6 +70,15 @@ class DataBase:
         await self._fetch_row(
             update(CardPayment.__table__).where(CardPayment.id == payment_id).values(is_safe=is_safe)
         )
+
+    async def get_user(self, login, password):
+        query = select([User.__table__])
+
+        result = await self._fetch_row(
+            query.where(User.login == login and User.password == password)
+        )
+
+        return User(**{k: v for k, v in result.items()}) if result else None
 
     async def _fetch_all(self, db_query, *args, **kwargs):
         async with self.pool.acquire() as connection:

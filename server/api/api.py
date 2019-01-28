@@ -1,14 +1,20 @@
 import datetime
+import hashlib
 import json
 import mimetypes
+import uuid
+
 import aiohttp_jinja2
 import jinja2
 
 from aiohttp import web
 
+from api.common import SESSION_IDS_TO_USER
 from api.db import DataBase
 from api.models import CardPayment, RequestedPayment
 from jinja2 import Template
+
+from api.utils import auth_required
 
 
 class Api:
@@ -86,7 +92,7 @@ class Api:
     async def card_payment_patch(self, request):
         post = await request.json()
         is_safe = not post.get('notSafe')
-        payment_id = post.get('payment_id')
+        payment_id = int(post.get('payment_id'))
 
         await self.db.patch_card_payment(payment_id, is_safe)
 
@@ -94,11 +100,20 @@ class Api:
             'result': 'OK',
         })
 
+    @auth_required
     async def card_payments(self, request):
         card_payments = await self._get_card_payments(request)
 
         return aiohttp_jinja2.render_template(
             'card_payments.html', request, {'card_payments': card_payments}
+        )
+
+    @auth_required
+    async def requested_payments(self, request):
+        requested_payments = await self._get_requested_payments(request)
+
+        return aiohttp_jinja2.render_template(
+            'requested_payments.html', request, {'requested_payments': requested_payments}
         )
 
     @staticmethod
@@ -151,8 +166,37 @@ class Api:
     @staticmethod
     async def admin(request):
         return aiohttp_jinja2.render_template(
-            'admin.html', request, {}
+            'admin.html', request, {'user': request.user}
         )
+
+    async def admin_post(self, request):
+        post = await request.post()
+
+        login = post.get('login')
+        password = post.get('password')
+
+        if not login or not password:
+            error = 'Не хватает логина или пароля'
+            return aiohttp_jinja2.render_template('admin.html', request, {'error': error})
+
+        sha256_password = hashlib.sha256(password.encode()).hexdigest()
+        user = await self.db.get_user(login, sha256_password)
+
+        if user:
+            sid = uuid.uuid4()
+            SESSION_IDS_TO_USER[str(sid)] = user
+
+            response = aiohttp_jinja2.render_template('admin.html', request, {'user': user})
+            response.set_cookie(
+                'sid',
+                sid,
+                expires=datetime.datetime.now() + datetime.timedelta(hours=24),
+            )
+
+            return response
+        else:
+            error = 'Неверный логин или пароль!'
+            return aiohttp_jinja2.render_template('admin.html', request, {'error': error})
 
     @staticmethod
     def _json_response(message):

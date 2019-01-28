@@ -11,5 +11,7 @@ def get_routes(api):
         web.post('/api/internet_bank_payment', api.internet_bank_payment),
         web.get('/payment/{customer}', api.payment_customer),
         web.get('/admin', api.admin),
+        web.post('/admin', api.admin_post),
         web.get('/admin/card_payments', api.card_payments),
+        web.get('/admin/requested_payments', api.requested_payments),
     ]

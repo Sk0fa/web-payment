@@ -1,7 +1,7 @@
 #header {
     margin-top: 5px;
     padding-bottom: 5px;
-    border-bottom: 1px solid black;
+    border-bottom: 2px solid #737373;
 }
 
 #customer_logo {
@@ -25,7 +25,7 @@
 }
 
 #payment {
-    border-bottom: 1px solid black;
+    /*border-bottom: 1px solid black;*/
 }
 
 #put_card_payment {
@@ -55,4 +55,8 @@ button {
 
 .pointer:hover {
     cursor: pointer;
+}
+
+.is_invalid {
+    border: 1px solid red;
 }

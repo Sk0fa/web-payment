@@ -21,8 +21,27 @@
 <body>
 <div class="content">
     <div class="container">
+        {% if user %}
         <a href="/admin/card_payments">Платежи с карты</a><br>
-        <a href="/admin/requested_payment">Запрошенные платежи</a>
+        <a href="/admin/requested_payments">Запрошенные платежи</a>
+        {% else %}
+        <div class="row">
+            <div class="col-md-6">
+                <form method="post">
+                    <input type="text" name="login" class="form-control" placeholder="Логин">
+                    <input type="password" name="password" class="form-control" placeholder="Пароль">
+
+                    <button type="submit" class="btn btn-primary">Войти</button>
+                </form>
+
+                {% if error %}
+                <div class="alert alert-danger">
+                    <strong>Ошибка!</strong> {{ error }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
     </div>
 </div>
 
